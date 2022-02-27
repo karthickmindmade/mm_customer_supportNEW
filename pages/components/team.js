@@ -84,13 +84,7 @@ export default function Team(props) {
             Router.push("/");
         }
     });
-
-    useEffect(() => {
-        setteamcount(team.filter(val => { return val.Isdeleted.toLowerCase().includes("n") }).map((teams) => setteamcount(teams.Status)).length);
-       
-        
-    });
-
+   
     //pagination
     function handlePageChange(pageNumber) {
         setCurrentpage(pageNumber + 1);

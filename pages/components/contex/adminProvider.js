@@ -18,7 +18,7 @@ export default function CounterContextProvider(props){
     ticketscount = tickets.length;
     //team tickets filter function
     var [search1, setSearch1] = useState('');
-   
+    const [usercount, setusercount] = useState();
     const[designTeamList,setdesignTeamList]=useState([])
     useEffect(() => {
         Axios.get("https://mindmadetech.in/api/tickets/list")
@@ -40,12 +40,12 @@ export default function CounterContextProvider(props){
         setSearch1(window.localStorage.getItem('tm_name'))
     });
 
-      // var [team, setTeam] = useState([]);
-    //  useEffect(() => {
-    //      Axios.get("https://mindmadetech.in/api/team/list")
-    //          .then((res) => setTeam(res.data))
-    //         .catch((err)=>{ return err; })
-    //  }, [setTeam]);
+      var [team, setTeam] = useState([]);
+     useEffect(() => {
+         Axios.get("https://mindmadetech.in/api/team/list")
+             .then((res) => setTeam(res.data))
+            .catch((err)=>{ return err; })
+     }, [setTeam]);
    function addTeammember(teamId){
        
         setdesignTeamList([...designTeamList,teamId])
@@ -56,10 +56,26 @@ export default function CounterContextProvider(props){
     
         setdesignTeamList([...designTeamList].filter((val)=> {if(val!==teamId){ return val }}))
    }
+   var [users, setUsers] = useState([]);
+   useEffect(() => {
+       Axios.get("https://mindmadetech.in/api/customer/list")
+           .then((res) => {
+               setUsers(res.data);
+           }).catch((err)=>{ return err; })
+   });
+   const [teamcount, setteamcount] = useState();
+   useEffect(() => {
+       setusercount(users.filter(val => { return val.Isdeleted.toLowerCase().includes("n") }).map((userd) => setusercount(userd.Status)).length);
+       // props.usercountcallback(usercount);
+       setteamcount(team.filter(val => { return val.Isdeleted.toLowerCase().includes("n") }).map((teams) => setteamcount(teams.Status)).length);
+   });
+  
 
     return(
         <CounterContext.Provider value={{
             showvalue,
+            usercount,
+            teamcount,
             setshowvalue,
             testing,
             setTesting,

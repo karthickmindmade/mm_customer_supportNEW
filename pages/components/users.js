@@ -29,11 +29,11 @@ import DashboardLayout from './common/adminNavbar';
     var [users, setUsers] = useState([]);
     var [exportUsers, setExportUsers] = useState([]);
     var [selectedValue, setSelectedValue] = useState([]);
-    const [usercount, setusercount] = useState();
+  
     const [login, setLogin] = useState();
     const [datalimit, setdatalimit] = useState(10);
     const [currentpage, setCurrentpage] = useState(1);
-
+    var [users, setUsers] = useState([]);
     useEffect(() => {
         Axios.get("https://mindmadetech.in/api/customer/list")
             .then((res) => {
@@ -50,10 +50,7 @@ import DashboardLayout from './common/adminNavbar';
         localStorage.setItem("passValue",false);
     });
 
-    useEffect(() => {
-        setusercount(users.filter(val => { return val.Isdeleted.toLowerCase().includes("n") }).map((userd) => setusercount(userd.Status)).length);
-        // props.usercountcallback(usercount);
-    });
+   
 
     const deleteUsers = (id) => {
         Axios.put(`https://mindmadetech.in/api/customer/delete/${id}`, {

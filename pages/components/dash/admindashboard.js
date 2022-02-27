@@ -13,16 +13,16 @@ import Piechart from './piechart';
 import DashboardLayout from '../common/adminNavbar';
 const AdminDashboard = () => {
 
-  const { tickets, notificationcount, ticketscount, adminNewcount, adminStartedcount, adminprogresscount, adminCompletedcount } = useContext(CounterContext);
+  const { tickets,usercount,teamcount, notificationcount, ticketscount, adminNewcount, adminStartedcount, adminprogresscount, adminCompletedcount } = useContext(CounterContext);
   const router = useRouter();
  
   
   // getactivetab
   const [activeTab, setActivetab] = useState();
   // usercount
-  const [usercount, setusercount] = useState();
+ 
    //team members count
-   const [teamcount, setteamcount] = useState();
+ 
 
   // cannot access page without login
   const [login, setLogin] = useState();
@@ -41,9 +41,7 @@ const AdminDashboard = () => {
     setActivetab(window.localStorage.getItem('activeTab'));
   }, []);
   // usercount
-  const handleCallback3 = (childData) => {
-    setusercount(childData);
-  };
+  
   //team members count
   const handleCallback4 = (childData) => {
     setteamcount(childData);

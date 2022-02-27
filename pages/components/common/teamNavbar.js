@@ -191,7 +191,7 @@ const onBackButtonEvent3 = () => {
             <List>
               <div>
               {items.map((item) => (
-                <Link href={item.href}>
+                <Link href={item.href} key={item.href}>
                 <div className="nav flex-column nav-pills silebar" >
                   <button className={router.pathname===item.href ?"nav-link active":"nav-link"}  > 
                   <ListItem button>

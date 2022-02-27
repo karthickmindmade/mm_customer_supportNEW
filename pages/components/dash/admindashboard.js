@@ -9,11 +9,11 @@ import Resentticket from './resentTickets';
 import Copyrights from '../common/copyRight';
 import { CounterContext } from '../contex/adminProvider';
 import Piechart from './piechart';
-
+import Axios from 'axios';
 import DashboardLayout from '../common/adminNavbar';
 const AdminDashboard = () => {
 
-  const { tickets,usercount,teamcount, notificationcount, ticketscount, adminNewcount, adminStartedcount, adminprogresscount, adminCompletedcount } = useContext(CounterContext);
+  const { tickets, notificationcount, ticketscount, adminNewcount, adminStartedcount, adminprogresscount, adminCompletedcount } = useContext(CounterContext);
   const router = useRouter();
  
   
@@ -33,7 +33,7 @@ const AdminDashboard = () => {
     } else if (login === null) {
       router.push("/");
     }
-  });
+  },[]);
 
  
   // getactivetab
@@ -46,6 +46,27 @@ const AdminDashboard = () => {
   const handleCallback4 = (childData) => {
     setteamcount(childData);
   }
+  var [team, setTeam] = useState([]);
+  useEffect(() => {
+      Axios.get("https://mindmadetech.in/api/team/list")
+          .then((res) => setTeam(res.data))
+         .catch((err)=>{ return err; })
+  }, [setTeam]);
+  var [users, setUsers] = useState([]);
+  useEffect(() => {
+      Axios.get("https://mindmadetech.in/api/customer/list")
+          .then((res) => {
+              setUsers(res.data);
+          }).catch((err)=>{ return err; })
+  },[]);
+  const [usercount, setusercount] = useState();
+  const [teamcount, setteamcount] = useState();
+  useEffect(() => {
+      setusercount(users.filter(val => { return val.Isdeleted.toLowerCase().includes("n") }).map((userd) => setusercount(userd.Status)).length);
+      // props.usercountcallback(usercount);
+      setteamcount(team.filter(val => { return val.Isdeleted.toLowerCase().includes("n") }).map((teams) => setteamcount(teams.Status)).length);
+  },[]);
+ 
   return (
     <>
       {login === "false" ? <div className="access ">access denied</div> :

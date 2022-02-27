@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Typography from '@mui/material/Typography';
-import Dashboard from "../common/navdashboard";
 import Userissue from "../submits/userissues";
 import { withRouter } from "next/router";
 import Axios from "axios";

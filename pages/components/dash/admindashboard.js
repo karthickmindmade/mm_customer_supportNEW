@@ -25,7 +25,16 @@ const AdminDashboard = () => {
    const [teamcount, setteamcount] = useState();
 
   // cannot access page without login
- 
+  const [login, setLogin] = useState();
+  useEffect(() => {
+    setLogin(window.localStorage.getItem('loggedin'));
+    if (login === "false") {
+      router.push("/");
+    } else if (login === null) {
+      router.push("/");
+    }
+  });
+
  
   // getactivetab
   useEffect(() => {
